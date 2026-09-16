@@ -11,7 +11,7 @@ function initNavToggle() {
 
 // ===== Konfirmasi hapus (front-end only, belum ke server) =====
 // Memakai event delegation di document karena baris tabel sekarang
-// dirender dinamis via fetch (lihat buku.js/anggota.js) sehingga
+// dirender dinamis via fetch (lihat alat.js/anggota.js) sehingga
 // tombol .btn-hapus belum tentu ada saat DOMContentLoaded.
 function initHapusConfirm() {
     document.addEventListener("click", function (e) {
@@ -66,31 +66,28 @@ function initValidasiForm() {
     form.addEventListener("submit", function (e) {
         let valid = true;
 
-        const judul = form.querySelector("[name='judul'], [name='nama']");
-        if (judul && judul.value.trim() === "") {
-            tampilkanError(judul, "Field ini wajib diisi.");
+        const nama = form.querySelector("[name='nama']");
+        if (nama && nama.value.trim() === "") {
+            tampilkanError(nama, "Field ini wajib diisi.");
             valid = false;
-        } else if (judul) {
-            hapusError(judul);
+        } else if (nama) {
+            hapusError(nama);
         }
 
-        const pengarang = form.querySelector("[name='pengarang']");
-        if (pengarang && pengarang.value.trim() === "") {
-            tampilkanError(pengarang, "Pengarang wajib diisi.");
+        const kategori = form.querySelector("[name='kategori']");
+        if (kategori && kategori.value.trim() === "") {
+            tampilkanError(kategori, "Kategori wajib diisi.");
             valid = false;
-        } else if (pengarang) {
-            hapusError(pengarang);
+        } else if (kategori) {
+            hapusError(kategori);
         }
 
-        const tahun = form.querySelector("[name='tahun']");
-        if (tahun) {
-            const nilai = parseInt(tahun.value, 10);
-            if (isNaN(nilai) || nilai < 1900 || nilai > 2026) {
-                tampilkanError(tahun, "Tahun harus di antara 1900-2026.");
-                valid = false;
-            } else {
-                hapusError(tahun);
-            }
+        const noAnggota = form.querySelector("[name='no_anggota']");
+        if (noAnggota && noAnggota.value.trim() === "") {
+            tampilkanError(noAnggota, "No. Penyewa wajib diisi.");
+            valid = false;
+        } else if (noAnggota) {
+            hapusError(noAnggota);
         }
 
         const stok = form.querySelector("[name='stok']");

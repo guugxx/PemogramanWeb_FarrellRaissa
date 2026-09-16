@@ -8,12 +8,12 @@
 body {
     font-family: "Segoe UI", Arial, sans-serif;
     color: #2b2b2b;
-    background-color: #f5f6f8;
+    background-color: #c4b9ef;
     line-height: 1.5;
 }
 
 a {
-    color: #1d5b8a;
+    color: #6c3fc5;
     text-decoration: none;
 }
 
@@ -23,7 +23,7 @@ a:hover {
 
 /* ===== Header & Navbar (Flexbox) ===== */
 header {
-    background-color: #1d5b8a;
+    background-color: #5b2c8f;
     color: #fff;
     padding: 1rem 1.5rem;
     display: flex;
@@ -34,6 +34,7 @@ header {
 
 header h1 {
     font-size: 1.4rem;
+    color: #fff;
 }
 
 header nav ul {
@@ -64,18 +65,32 @@ section {
 
 section h2 {
     margin-bottom: 1rem;
-    color: #1d5b8a;
+    color: #5b2c8f;
+}
+
+/* ===== Section Sambutan (rata tengah) ===== */
+main section:first-of-type {
+    text-align: center;
 }
 
 /* ===== Kartu Statistik (CSS Grid) ===== */
 main section:nth-of-type(2) {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(160px, 220px));
+    justify-content: center;
+    align-items: stretch;
     gap: 1rem;
 }
 
+/* Judul "Ringkasan" mengisi satu baris penuh, tidak ikut jadi kotak grid */
+main section:nth-of-type(2) h2 {
+    grid-column: 1 / -1;
+    text-align: center;
+}
+
 main section:nth-of-type(2) article {
-    background-color: #eef4fa;
+    background-color: #f0e6fb;
+    border: 1px solid #5b2c8f;
     border-radius: 8px;
     padding: 1.25rem;
     text-align: center;
@@ -83,14 +98,14 @@ main section:nth-of-type(2) article {
 
 main section:nth-of-type(2) article h3 {
     font-size: 0.95rem;
-    color: #55677a;
+    color: #7a5ea8;
     margin-bottom: 0.5rem;
 }
 
 main section:nth-of-type(2) article p {
     font-size: 1.8rem;
     font-weight: 700;
-    color: #1d5b8a;
+    color: #5b2c8f;
 }
 
 /* ===== Tabel ===== */
@@ -102,20 +117,20 @@ table {
 th, td {
     text-align: left;
     padding: 0.65rem 0.75rem;
-    border-bottom: 1px solid #e2e6ea;
+    border-bottom: 1px solid #e5dff2;
 }
 
 thead {
-    background-color: #1d5b8a;
+    background-color: #5b2c8f;
     color: #fff;
 }
 
 tbody tr:nth-child(even) {
-    background-color: #f7f9fb;
+    background-color: #faf8fd;
 }
 
 tbody tr:hover {
-    background-color: #eef4fa;
+    background-color: #f0e6fb;
 }
 
 td button {
@@ -154,13 +169,13 @@ form select {
     width: 100%;
     max-width: 400px;
     padding: 0.55rem 0.7rem;
-    border: 1px solid #cdd4da;
+    border: 1px solid #d8cdea;
     border-radius: 4px;
     font-size: 1rem;
 }
 
 form button[type="submit"] {
-    background-color: #1d5b8a;
+    background-color: #5b2c8f;
     color: #fff;
     border: none;
     padding: 0.6rem 1.5rem;
@@ -170,14 +185,14 @@ form button[type="submit"] {
 }
 
 form button[type="submit"]:hover {
-    background-color: #164869;
+    background-color: #431f69;
 }
 
 /* ===== Footer ===== */
 footer {
     text-align: center;
     padding: 1.25rem;
-    color: #7a8794;
+    color: #8a7a9c;
     font-size: 0.9rem;
 }
 
@@ -201,9 +216,9 @@ footer {
 /* ===== Responsive Breakpoints ===== */
 
 /* Tablet ke bawah */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     main section:nth-of-type(2) {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(140px, 200px));
     }
 }
 
@@ -234,7 +249,8 @@ footer {
     }
 
     main section:nth-of-type(2) {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(160px, 220px);
+        justify-content: center;
     }
 
     form input,

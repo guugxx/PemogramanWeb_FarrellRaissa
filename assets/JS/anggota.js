@@ -1,5 +1,5 @@
-// Mengambil & menampilkan Daftar Anggota secara asinkron dari data/anggota.json
-async function muatDaftarAnggota() {
+// Mengambil & menampilkan Daftar Penyewa secara asinkron dari data/anggota.json
+async function muatDaftarPenyewa() {
     const tbody = document.querySelector(".table-responsive table tbody");
     const loading = document.getElementById("loading-indicator");
     if (!tbody) return;
@@ -14,15 +14,15 @@ async function muatDaftarAnggota() {
         if (!res.ok) {
             throw new Error("Gagal mengambil data (status " + res.status + ")");
         }
-        const daftarAnggota = await res.json();
+        const daftarPenyewa = await res.json();
 
-        daftarAnggota.forEach(function (anggota) {
+        daftarPenyewa.forEach(function (penyewa) {
             const tr = document.createElement("tr");
             tr.innerHTML =
-                "<td>" + anggota.no_anggota + "</td>" +
-                "<td>" + anggota.nama + "</td>" +
-                "<td>" + anggota.alamat + "</td>" +
-                "<td>" + anggota.no_hp + "</td>" +
+                "<td>" + penyewa.no_anggota + "</td>" +
+                "<td>" + penyewa.nama + "</td>" +
+                "<td>" + penyewa.alamat + "</td>" +
+                "<td>" + penyewa.no_hp + "</td>" +
                 "<td>" +
                 "<button type=\"button\">Edit</button> " +
                 "<button type=\"button\" class=\"btn-hapus\">Hapus</button>" +
@@ -37,4 +37,4 @@ async function muatDaftarAnggota() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", muatDaftarAnggota);
+document.addEventListener("DOMContentLoaded", muatDaftarPenyewa);

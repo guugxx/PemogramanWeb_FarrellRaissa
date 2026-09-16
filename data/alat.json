@@ -1,0 +1,12 @@
+[
+    { "nama": "Kamera DSLR Canon 700D", "kategori": "Kamera", "kondisi": "Baik", "stok": 4 },
+    { "nama": "Tripod Kamera", "kategori": "Aksesoris", "kondisi": "Baik", "stok": 2 },
+    { "nama": "Lampu Studio LED", "kategori": "Pencahayaan", "kondisi": "Rusak Ringan", "stok": 0 },
+    { "nama": "Mic Wireless", "kategori": "Audio", "kondisi": "Baik", "stok": 5 },
+    { "nama": "Drone DJI Mini", "kategori": "Drone", "kondisi": "Baik", "stok": 1 },
+    { "nama": "Lensa Fix 50mm", "kategori": "Lensa", "kondisi": "Baik", "stok": 3 },
+    { "nama": "Gimbal Stabilizer", "kategori": "Aksesoris", "kondisi": "Baik", "stok": 2 },
+    { "nama": "Proyektor Mini", "kategori": "Elektronik", "kondisi": "Baik", "stok": 6 },
+    { "nama": "Layar Proyektor", "kategori": "Elektronik", "kondisi": "Rusak Berat", "stok": 0 },
+    { "nama": "Speaker Portable", "kategori": "Audio", "kondisi": "Baik", "stok": 4 }
+]
