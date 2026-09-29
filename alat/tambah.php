@@ -9,7 +9,7 @@ unset($_SESSION['flash']);
             <h2>Tambah Alat</h2>
 
             <?php if ($flash): ?>
-                <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
+                <p class="flash flash-<?php echo htmlspecialchars($flash['type']); ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
             <?php endif; ?>
 
             <form id="form-tambah" method="post" action="proses_tambah.php">
@@ -31,7 +31,7 @@ unset($_SESSION['flash']);
                 </p>
                 <p>
                     <label for="stok">Stok</label><br>
-                    <input type="number" id="stok" name="stok" min="0" required>
+                    <input type="number" id="stok" name="stok" min="0" step="1" required>
                 </p>
                 <p>
                     <button type="submit">Simpan</button>

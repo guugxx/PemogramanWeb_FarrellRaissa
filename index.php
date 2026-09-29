@@ -1,9 +1,9 @@
 <?php
 $page_title = "Beranda";
+require __DIR__ . '/includes/koneksi.php';
+$totalAlat = (int) $pdo->query('SELECT COUNT(*) FROM alat')->fetchColumn();
+$totalPenyewa = (int) $pdo->query('SELECT COUNT(*) FROM penyewa')->fetchColumn();
 include __DIR__ . '/includes/header.php';
-
-$totalAlat = count($_SESSION['alat'] ?? []);
-$totalPenyewa = count($_SESSION['penyewa'] ?? []);
 ?>
         <section>
             <h2>Selamat Datang di Sistem Rental Alat</h2>

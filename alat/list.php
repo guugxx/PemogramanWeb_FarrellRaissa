@@ -1,16 +1,17 @@
 <?php
 $page_title = "Daftar Alat";
+require __DIR__ . '/../includes/koneksi.php';
+$daftarAlat = $pdo->query('SELECT id, nama, kategori, kondisi, stok FROM alat ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 include __DIR__ . '/../includes/header.php';
 
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
-$daftarAlat = $_SESSION['alat'] ?? [];
 ?>
         <section>
             <h2>Daftar Alat</h2>
 
             <?php if ($flash): ?>
-                <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
+                <p class="flash flash-<?php echo htmlspecialchars($flash['type']); ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
             <?php endif; ?>
 
             <div class="search-box">

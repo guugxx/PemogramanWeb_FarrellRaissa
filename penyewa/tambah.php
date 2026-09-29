@@ -9,7 +9,7 @@ unset($_SESSION['flash']);
             <h2>Tambah Penyewa</h2>
 
             <?php if ($flash): ?>
-                <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
+                <p class="flash flash-<?php echo htmlspecialchars($flash['type']); ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
             <?php endif; ?>
 
             <form id="form-tambah" method="post" action="proses_tambah.php">
@@ -18,8 +18,8 @@ unset($_SESSION['flash']);
                     <input type="text" id="nama" name="nama" required>
                 </p>
                 <p>
-                    <label for="no_anggota">No. Penyewa</label><br>
-                    <input type="text" id="no_anggota" name="no_anggota" required>
+                    <label for="no_penyewa">No. Penyewa</label><br>
+                    <input type="text" id="no_penyewa" name="no_penyewa" required>
                 </p>
                 <p>
                     <label for="alamat">Alamat</label><br>

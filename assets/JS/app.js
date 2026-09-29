@@ -1,4 +1,4 @@
-// ===== Hamburger menu (JS-driven, menggantikan checkbox hack) =====
+// ===== Hamburger menu (JS-driven) =====
 function initNavToggle() {
     const toggleBtn = document.getElementById("nav-toggle-btn");
     const nav = document.querySelector("header nav");
@@ -10,9 +10,8 @@ function initNavToggle() {
 }
 
 // ===== Konfirmasi hapus (front-end only, belum ke server) =====
-// Memakai event delegation di document karena baris tabel sekarang
-// dirender dinamis via fetch (lihat alat.js/anggota.js) sehingga
-// tombol .btn-hapus belum tentu ada saat DOMContentLoaded.
+// Memakai event delegation di document supaya tombol .btn-hapus
+// tetap terdeteksi walaupun baris tabel dirender oleh PHP.
 function initHapusConfirm() {
     document.addEventListener("click", function (e) {
         const btn = e.target.closest(".btn-hapus");

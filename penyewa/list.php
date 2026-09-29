@@ -1,16 +1,17 @@
 <?php
 $page_title = "Daftar Penyewa";
+require __DIR__ . '/../includes/koneksi.php';
+$daftarPenyewa = $pdo->query('SELECT id, no_penyewa, nama, alamat, no_hp FROM penyewa ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 include __DIR__ . '/../includes/header.php';
 
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
-$daftarPenyewa = $_SESSION['penyewa'] ?? [];
 ?>
         <section>
             <h2>Daftar Penyewa</h2>
 
             <?php if ($flash): ?>
-                <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
+                <p class="flash flash-<?php echo htmlspecialchars($flash['type']); ?>"><?php echo htmlspecialchars($flash['pesan']); ?></p>
             <?php endif; ?>
 
             <div class="search-box">
@@ -37,7 +38,7 @@ $daftarPenyewa = $_SESSION['penyewa'] ?? [];
                     <?php else: ?>
                         <?php foreach ($daftarPenyewa as $penyewa): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($penyewa['no_anggota']); ?></td>
+                            <td><?php echo htmlspecialchars($penyewa['no_penyewa']); ?></td>
                             <td><?php echo htmlspecialchars($penyewa['nama']); ?></td>
                             <td><?php echo htmlspecialchars($penyewa['alamat']); ?></td>
                             <td><?php echo htmlspecialchars($penyewa['no_hp']); ?></td>
