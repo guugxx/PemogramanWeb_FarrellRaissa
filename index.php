@@ -1,9 +1,10 @@
 <?php
 $page_title = "Beranda";
-require __DIR__ . '/includes/koneksi.php';
-$totalAlat = (int) $pdo->query('SELECT COUNT(*) FROM alat')->fetchColumn();
-$totalPenyewa = (int) $pdo->query('SELECT COUNT(*) FROM penyewa')->fetchColumn();
 include __DIR__ . '/includes/header.php';
+require __DIR__ . '/includes/koneksi.php';
+
+$totalAlat = $pdo->query("SELECT COUNT(*) FROM alat")->fetchColumn();
+$totalPenyewa = $pdo->query("SELECT COUNT(*) FROM penyewa")->fetchColumn();
 ?>
         <section>
             <h2>Selamat Datang di Sistem Rental Alat</h2>

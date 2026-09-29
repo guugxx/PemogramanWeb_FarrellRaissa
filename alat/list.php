@@ -1,11 +1,33 @@
 <?php
 $page_title = "Daftar Alat";
-require __DIR__ . '/../includes/koneksi.php';
-$daftarAlat = $pdo->query('SELECT id, nama, kategori, kondisi, stok FROM alat ORDER BY id DESC')->fetchAll(PDO::FETCH_ASSOC);
 include __DIR__ . '/../includes/header.php';
+require __DIR__ . '/../includes/koneksi.php';
 
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
+
+$perPage = 5;
+$page = max(1, (int) ($_GET['page'] ?? 1));
+$offset = ($page - 1) * $perPage;
+$keyword = trim($_GET['q'] ?? '');
+
+if ($keyword !== '') {
+    $hitung = $pdo->prepare("SELECT COUNT(*) FROM alat WHERE nama ILIKE :kw");
+    $hitung->execute(['kw' => '%' . $keyword . '%']);
+    $totalRows = $hitung->fetchColumn();
+
+    $stmt = $pdo->prepare("SELECT * FROM alat WHERE nama ILIKE :kw ORDER BY id DESC LIMIT :limit OFFSET :offset");
+    $stmt->bindValue('kw', '%' . $keyword . '%');
+} else {
+    $totalRows = $pdo->query("SELECT COUNT(*) FROM alat")->fetchColumn();
+    $stmt = $pdo->prepare("SELECT * FROM alat ORDER BY id DESC LIMIT :limit OFFSET :offset");
+}
+$stmt->bindValue('limit', $perPage, PDO::PARAM_INT);
+$stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+
+$daftarAlat = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$totalPages = max(1, (int) ceil($totalRows / $perPage));
 ?>
         <section>
             <h2>Daftar Alat</h2>
@@ -15,8 +37,13 @@ unset($_SESSION['flash']);
             <?php endif; ?>
 
             <div class="search-box">
-                <label for="search-input">Cari Nama Alat</label>
-                <input type="text" id="search-input" placeholder="Ketik nama alat...">
+                <form method="get" action="list.php">
+                    <span>
+                        <label for="search-input">Cari Nama Alat</label><br>
+                        <input type="text" id="search-input" name="q" value="<?php echo htmlspecialchars($keyword); ?>" placeholder="Ketik nama alat...">
+                    </span>
+                    <button type="submit">Cari</button>
+                </form>
             </div>
 
             <div class="table-responsive">
@@ -33,7 +60,7 @@ unset($_SESSION['flash']);
                 <tbody>
                     <?php if (empty($daftarAlat)): ?>
                     <tr>
-                        <td colspan="5">Belum ada data alat. Silakan tambah lewat menu "Tambah Alat".</td>
+                        <td colspan="5">Tidak ada data alat yang cocok.</td>
                     </tr>
                     <?php else: ?>
                         <?php foreach ($daftarAlat as $alat): ?>
@@ -43,8 +70,11 @@ unset($_SESSION['flash']);
                             <td><?php echo htmlspecialchars($alat['kondisi']); ?></td>
                             <td><?php echo $alat['stok']; ?></td>
                             <td>
-                                <button type="button">Edit</button>
-                                <button type="button" class="btn-hapus">Hapus</button>
+                                <a href="edit.php?id=<?php echo (int) $alat['id']; ?>" class="btn-edit">Edit</a>
+                                <form class="form-hapus" method="post" action="hapus.php">
+                                    <input type="hidden" name="id" value="<?php echo (int) $alat['id']; ?>">
+                                    <button type="submit" class="btn-hapus">Hapus</button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>
@@ -52,5 +82,12 @@ unset($_SESSION['flash']);
                 </tbody>
             </table>
             </div>
+
+            <nav class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <a href="list.php?page=<?php echo $i; ?><?php echo $keyword !== '' ? '&q=' . urlencode($keyword) : ''; ?>"
+                   class="<?php echo $i === $page ? 'active' : ''; ?>"><?php echo $i; ?></a>
+                <?php endfor; ?>
+            </nav>
         </section>
 <?php include __DIR__ . '/../includes/footer.php'; ?>

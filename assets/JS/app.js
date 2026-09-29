@@ -9,20 +9,17 @@ function initNavToggle() {
     });
 }
 
-// ===== Konfirmasi hapus (front-end only, belum ke server) =====
-// Memakai event delegation di document supaya tombol .btn-hapus
-// tetap terdeteksi walaupun baris tabel dirender oleh PHP.
+// ===== Konfirmasi hapus =====
+// Konfirmasi dilakukan saat form hapus dikirim agar request bisa dibatalkan.
 function initHapusConfirm() {
-    document.addEventListener("click", function (e) {
-        const btn = e.target.closest(".btn-hapus");
-        if (!btn) return;
+    document.addEventListener("submit", function (e) {
+        const form = e.target;
+        if (!form.classList.contains("form-hapus")) return;
 
-        const row = btn.closest("tr");
+        const row = form.closest("tr");
         const nama = row ? row.querySelector("td")?.textContent : "data ini";
         const yakin = confirm("Yakin ingin menghapus \"" + nama + "\"?");
-        if (yakin && row) {
-            row.remove();
-        }
+        if (!yakin) e.preventDefault();
     });
 }
 
@@ -81,19 +78,27 @@ function initValidasiForm() {
             hapusError(kategori);
         }
 
-        const noAnggota = form.querySelector("[name='no_anggota']");
-        if (noAnggota && noAnggota.value.trim() === "") {
-            tampilkanError(noAnggota, "No. Penyewa wajib diisi.");
+        const kondisi = form.querySelector("[name='kondisi']");
+        if (kondisi && !["Baik", "Rusak Ringan", "Rusak Berat"].includes(kondisi.value)) {
+            tampilkanError(kondisi, "Kondisi alat tidak valid.");
             valid = false;
-        } else if (noAnggota) {
-            hapusError(noAnggota);
+        } else if (kondisi) {
+            hapusError(kondisi);
+        }
+
+        const noPenyewa = form.querySelector("[name='no_penyewa']");
+        if (noPenyewa && noPenyewa.value.trim() === "") {
+            tampilkanError(noPenyewa, "No. Penyewa wajib diisi.");
+            valid = false;
+        } else if (noPenyewa) {
+            hapusError(noPenyewa);
         }
 
         const stok = form.querySelector("[name='stok']");
         if (stok) {
-            const nilai = parseInt(stok.value, 10);
-            if (isNaN(nilai) || nilai < 0) {
-                tampilkanError(stok, "Stok tidak boleh negatif.");
+            const nilai = stok.value.trim() === "" ? NaN : Number(stok.value);
+            if (!Number.isInteger(nilai) || nilai < 0) {
+                tampilkanError(stok, "Stok harus berupa bilangan bulat non-negatif.");
                 valid = false;
             } else {
                 hapusError(stok);

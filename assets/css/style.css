@@ -173,6 +173,55 @@ td button:last-of-type {
     color: #fff;
 }
 
+td a.btn-edit {
+    display: inline-block;
+    padding: 0.35rem 0.7rem;
+    margin-right: 0.35rem;
+    border-radius: 4px;
+    background-color: var(--accent);
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+td form.form-hapus {
+    display: inline;
+}
+
+/* ===== Pagination ===== */
+.pagination {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.pagination a {
+    padding: 0.4rem 0.75rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    color: var(--brand);
+}
+
+.pagination a.active {
+    background-color: var(--brand);
+    color: #fff;
+    border-color: var(--brand);
+}
+
+.search-box form {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.search-box button {
+    padding: 0.55rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--brand);
+    color: #fff;
+    cursor: pointer;
+}
+
 /* ===== Form ===== */
 form p {
     margin-bottom: 1rem;

@@ -2,12 +2,16 @@
 session_start();
 require __DIR__ . '/../includes/koneksi.php';
 
+$id = $_POST['id'] ?? null;
+if (!$id) {
+    header('Location: list.php');
+    exit;
+}
+
 $nama = trim($_POST['nama'] ?? '');
 $kategori = trim($_POST['kategori'] ?? '');
 $kondisi = trim($_POST['kondisi'] ?? '');
-$stok = $_POST['stok'] ?? '';
-$stokValid = filter_var($stok, FILTER_VALIDATE_INT);
-
+$stok = filter_var($_POST['stok'] ?? '', FILTER_VALIDATE_INT);
 $kondisiValid = ['Baik', 'Rusak Ringan', 'Rusak Berat'];
 
 $errors = [];
@@ -20,28 +24,28 @@ if ($kategori === '') {
 if (!in_array($kondisi, $kondisiValid, true)) {
     $errors[] = "Kondisi tidak valid.";
 }
-if ($stokValid === false || $stokValid < 0) {
+if ($stok === false || $stok < 0) {
     $errors[] = "Stok harus berupa bilangan bulat non-negatif.";
 }
 
 if (!empty($errors)) {
     $_SESSION['flash'] = ['type' => 'error', 'pesan' => implode(' ', $errors)];
-    header('Location: tambah.php');
+    header('Location: edit.php?id=' . urlencode($id));
     exit;
 }
 
 $stmt = $pdo->prepare(
-    "INSERT INTO alat (nama, kategori, kondisi, stok)
-     VALUES (:nama, :kategori, :kondisi, :stok)
-     RETURNING id"
+    "UPDATE alat SET nama = :nama, kategori = :kategori, kondisi = :kondisi,
+     stok = :stok WHERE id = :id"
 );
 $stmt->execute([
     'nama' => $nama,
     'kategori' => $kategori,
     'kondisi' => $kondisi,
-    'stok' => $stokValid,
+    'stok' => $stok,
+    'id' => $id,
 ]);
 
-$_SESSION['flash'] = ['type' => 'success', 'pesan' => 'Alat berhasil ditambahkan.'];
+$_SESSION['flash'] = ['type' => 'success', 'pesan' => 'Alat berhasil diperbarui.'];
 header('Location: list.php');
 exit;
